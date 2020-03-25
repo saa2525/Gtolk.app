@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import android.widget.AdapterView
 import android.widget.Toast
 import android.widget.ArrayAdapter
-import android.R
 import android.support.v4.view.GravityCompat
 import android.support.v4.view.MenuItemCompat.getActionView
 import android.widget.Spinner
