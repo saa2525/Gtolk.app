@@ -26,9 +26,15 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.View
+import android.support.v4.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
+    private val spinnerItems1 = arrayOf("iPhone", "Android", "Apple", "Windows")
+    private val spinnerItems2 = arrayOf("Japan", "America", "China", "Canada")
+
 
     private lateinit var mToolbar: Toolbar
     //private var mGenre =0
@@ -53,28 +59,54 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
         // ナビゲーションドロワーの設定
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
-        val toggle =
-            ActionBarDrawerToggle(this, drawer, mToolbar, R.string.app_name, R.string.app_name)
+        val toggle = ActionBarDrawerToggle(this, drawer, mToolbar, R.string.app_name, R.string.app_name)
         drawer.addDrawerListener(toggle)
         toggle.syncState()
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
 
-        sp.adapter =
-            ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, gkbs)
-        sp.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+        //〇スピナー
+        val sp1 = navigationView.menu.findItem(R.id.nav_bgkb).actionView as Spinner
+        val sp2 = navigationView.menu.findItem(R.id.nav_rgkb).actionView as Spinner
+        //スピナーにアダプターをセット
+        sp1.adapter =
+            ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,spinnerItems1)
+        sp2.adapter =
+            ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,spinnerItems2)
 
-            //override追加
+        //リスナーを登録
+        sp1.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            //アイテムが選択されたとき
             override fun onItemSelected(
                 parent: AdapterView<*>,
                 view: View,
                 position: Int,
                 id: Long
             ) {
-                Toast.makeText(this@MainActivity, gkbs[position], Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity,spinnerItems1[position], Int,Toast.LENGTH_SHORT).show()
+
             }
 
+            //アイテムが選択されなかったとき
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
+
+        sp2.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            //アイテムが選択されたとき
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                Toast.makeText(this@MainActivity,spinnerItems2[position], Int,Toast.LENGTH_SHORT).show()
+
+            }
+
+            //アイテムが選択されなかったとき
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
 
@@ -96,8 +128,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
+
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         drawer.closeDrawer(GravityCompat.START)
         return true

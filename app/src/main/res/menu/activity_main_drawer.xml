@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/nav_gkb"
+    <item android:id="@+id/nav_bgkb"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="Phone"
+        app:actionLayout="@layout/spinner_menu"/>
+
+    <item android:id="@+id/nav_rgkb"
         android:icon="@android:drawable/ic_menu_manage"
         android:title="Language"
         app:actionLayout="@layout/spinner_menu"/>
