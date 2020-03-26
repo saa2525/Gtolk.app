@@ -28,6 +28,12 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.View
 import android.support.v4.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import android.support.annotation.NonNull
+import android.support.design.widget.BottomNavigationView
+import android.support.v4.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
+
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -109,6 +115,30 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             //アイテムが選択されなかったとき
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
+
+        // ボトムナビゲーションを読み込む
+        val bottomavigation = findViewById(R.id.bottom_navigation) as BottomNavigationView
+        // BottomNavigationViewHelperでアイテムのサイズ、アニメーションを調整
+        BottomNavigationViewHelper.disableShiftMode(bottomavigation)
+        // BottomNavigationViewを選択したときのリスナー
+        bottomavigation.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            // 各選択したときの処理
+            when (item.itemId) {
+                R.id.nav_home ->
+
+                    return@OnNavigationItemSelectedListener true
+                R.id.nav_search ->
+
+                    return@OnNavigationItemSelectedListener true
+                R.id.nav_box ->
+
+                    return@OnNavigationItemSelectedListener true
+                R.id.nav_new ->
+
+                    return@OnNavigationItemSelectedListener true
+            }
+            false
+        })
 
     }
 

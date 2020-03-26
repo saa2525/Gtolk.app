@@ -27,7 +27,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/plus" />   <!-- plus.pngを使うようにする -->
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="80dp"
+        app:srcCompat="@drawable/ic_edit_black_24dp" />   <!-- plus.pngを使うようにする -->
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
+        app:itemTextColor="@drawable/bottom_navigation_item_state"
+        app:itemIconTint="@drawable/bottom_navigation_item_state"
+        app:menu="@menu/bottom_navigation_item"/>
 
 </android.support.design.widget.CoordinatorLayout>
