@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 position: Int,
                 id: Long
             ) {
-                Toast.makeText(this@MainActivity,spinnerItems1[position], Int,Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity,spinnerItems1[position], Toast.LENGTH_SHORT).show()
 
             }
 
@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 position: Int,
                 id: Long
             ) {
-                Toast.makeText(this@MainActivity,spinnerItems2[position], Int,Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity,spinnerItems2[position], Toast.LENGTH_SHORT).show()
 
             }
 
