@@ -38,12 +38,13 @@ import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+
     private val spinnerItems1 = arrayOf("iPhone", "Android", "Apple", "Windows")
     private val spinnerItems2 = arrayOf("Japan", "America", "China", "Canada")
 
 
     private lateinit var mToolbar: Toolbar
-    //private var mGenre =0
+    private var mspinner =0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,18 +52,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mToolbar = findViewById(R.id.toolbar)
         setSupportActionBar(mToolbar)
 
-        //ログイン有無
         val fab = findViewById<FloatingActionButton>(R.id.fab)
-        fab.setOnClickListener { _ ->
+        // --- ここから ---
+        fab.setOnClickListener { view ->
+            // ジャンルを選択していない場合（mGenre == 0）はエラーを表示するだけ
+
             // ログイン済みのユーザーを取得する
             val user = FirebaseAuth.getInstance().currentUser
 
-            // ログインしていなければログイン画面に遷移させる
             if (user == null) {
+                // ログインしていなければログイン画面に遷移させる
                 val intent = Intent(applicationContext, LoginActivity::class.java)
+                startActivity(intent)
+            } else {
+                // ジャンルを渡して質問作成画面を起動する
+                val intent = Intent(applicationContext, QuestionSendActivity::class.java)
+                intent.putExtra("genre", mspinner)
                 startActivity(intent)
             }
         }
+        // --- ここまで修正 ---
         // ナビゲーションドロワーの設定
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         val toggle = ActionBarDrawerToggle(this, drawer, mToolbar, R.string.app_name, R.string.app_name)
@@ -165,6 +174,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawer.closeDrawer(GravityCompat.START)
         return true
     }
+
 }
 
 
