@@ -30,14 +30,13 @@ import android.support.v4.content.ContextCompat.getSystemService
 import android.icu.lang.UCharacter.GraphemeClusterBreak.T
 import android.support.annotation.NonNull
 import android.support.design.widget.BottomNavigationView
-import android.support.v4.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-
-
+import com.google.firebase.database.DatabaseReference
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
+    private lateinit var mDataBaseReference: DatabaseReference
+    private lateinit var mEventListner: EventListener
 
     private val spinnerItems1 = arrayOf("iPhone", "Android", "Apple", "Windows")
     private val spinnerItems2 = arrayOf("Japan", "America", "China", "Canada")
@@ -55,15 +54,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val fab = findViewById<FloatingActionButton>(R.id.fab)
         // --- ここから ---
         fab.setOnClickListener { view ->
-            // ジャンルを選択していない場合（mGenre == 0）はエラーを表示するだけ
-
-            // ログイン済みのユーザーを取得する
-            val user = FirebaseAuth.getInstance().currentUser
-
-            if (user == null) {
-                // ログインしていなければログイン画面に遷移させる
-                val intent = Intent(applicationContext, LoginActivity::class.java)
-                startActivity(intent)
+            // ジャンルを選択していない場合（mspinner == 0）はエラーを表示するだけ
+            if (mspinner == 0) {
+                Snackbar.make(view, "ジャンルを選択して下さい", Snackbar.LENGTH_LONG).show()
             } else {
                 // ジャンルを渡して質問作成画面を起動する
                 val intent = Intent(applicationContext, QuestionSendActivity::class.java)
@@ -101,6 +94,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 id: Long
             ) {
                 Toast.makeText(this@MainActivity,spinnerItems1[position], Toast.LENGTH_SHORT).show()
+                var item1 =spinnerItems1.getSelectedItem() as String
+                if(item1 == null){
+                    item1 = spinnerItems1.getSelectedItem() as String
+                }
+                mToolbar.title = item1
+
+                var item1Ref = mDataBaseReference.child(ContentsPATH).child(item1)
+                item1Ref.addChildEventListner(mEventListner)
+
 
             }
 
@@ -118,6 +120,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 id: Long
             ) {
                 Toast.makeText(this@MainActivity,spinnerItems2[position], Toast.LENGTH_SHORT).show()
+
+                var item2 =spinnerItems2.getSelectedItem() as String
+                if(item2 == null){
+                    item2 = spinnerItems1.getSelectedItem() as String
+                }
+                mToolbar.title = item2
+
+                var item2Ref = mDataBaseReference.child(ContentsPATH).child(item2)
+                item2Ref.addChildEventListner(mEventListner)
+
 
             }
 
@@ -151,6 +163,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+
+        // 1:趣味を既定の選択とする
+        if(mspinner == 0) {
+            onNavigationItemSelected(navigationView.menu.getItem(0))  //修正要りそう
+        }
+    }
+
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -169,6 +192,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+
+
+
+
+        //spinnerでどう振り分ける？
 
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         drawer.closeDrawer(GravityCompat.START)

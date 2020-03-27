@@ -35,7 +35,7 @@ class QuestionSendActivity : AppCompatActivity(), View.OnClickListener, Database
         private val PERMISSIONS_REQUEST_CODE = 100
     }
 
-    private var mGenre: Int = 0
+    private var mspinner: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +43,10 @@ class QuestionSendActivity : AppCompatActivity(), View.OnClickListener, Database
 
         // 渡ってきたジャンルの番号を保持する
         val extras = intent.extras
-        mGenre = extras.getInt("genre")
+        mspinner = extras.getInt("genre")
 
         // UIの準備
-        title = "質問作成"
+        title = "投稿作成"
 
         sendButton.setOnClickListener(this)
     }
@@ -58,19 +58,19 @@ class QuestionSendActivity : AppCompatActivity(), View.OnClickListener, Database
             im.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS)
 
             val dataBaseReference = FirebaseDatabase.getInstance().reference
-            val genreRef = dataBaseReference.child(ContentsPATH).child(mGenre.toString())
+            val genreRef = dataBaseReference.child(ContentsPATH).child(mspinner.toString())
 
             val data = HashMap<String, String>()
 
             // UID
             data["uid"] = FirebaseAuth.getInstance().currentUser!!.uid
 
-            // タイトルと本文を取得する
+            // 本文を取得する
             val body = bodyText.text.toString()
 
             if (body.isEmpty()) {
-                // 質問が入力されていない時はエラーを表示するだけ
-                Snackbar.make(v, "質問を入力して下さい", Snackbar.LENGTH_LONG).show()
+                // 投稿が入力されていない時はエラーを表示するだけ
+                Snackbar.make(v, "投稿を入力して下さい", Snackbar.LENGTH_LONG).show()
                 return
             }
 

@@ -24,7 +24,7 @@
             android:layout_centerVertical="true"
             android:text="注意事項"
             android:textColorHint="@color/common_google_signin_btn_text_dark_focused"
-            android:textSize="30sp" />
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/textView2"
@@ -32,18 +32,19 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:text="こういう注意事項があります。守ってください。"
+            android:text="・・・〇〇は禁止されています。守ってください。～～"
             android:textSize="18sp" />
 
         <Button
+            android:id="@+id/loginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/textView2"
             android:layout_marginTop="4dp"
-            android:text="同意する"
-            android:id="@+id/loginButton"
             android:background="@drawable/custom_button"
-            android:textColor="@color/colorButtonText"
-            android:layout_below="@+id/textView2"/>
+            android:onClick="onClick"
+            android:text="同意する"
+            android:textColor="@color/colorButtonText" />
 
         <Button
             android:layout_width="match_parent"
